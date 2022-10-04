@@ -1,7 +1,7 @@
-# 1 Mediatori
+# 1 I Broker
 
 ## 1.0 Introduzione
-I mediatori (broker) sono un collegamento tra la logica aziendale e il mondo esterno.
+I broker (mediatori) sono un collegamento tra la logica aziendale e il mondo esterno.
 Sono wrapper attorno a librerie, risorse, servizi o API esterne per soddisfare un'interfaccia locale per consentire all'azienda di interagire con esse senza dover essere strettamente accoppiate con risorse particolari o implementazione di librerie esterne.
 
 I broker, in generale, sono pensati per essere usa e getta e sostituibili: sono costruiti con la consapevolezza che la tecnologia si evolve e cambia continuamente. Pertanto, a un certo punto del ciclo di vita di una determinata applicazione, verrà sostituita con una tecnologia recente che consente di svolgere il lavoro più rapidamente.
@@ -13,7 +13,7 @@ Ad esempio, supponiamo che tu abbia un'API creata per consumare e fornire dati d
 ## 1.1 Sulla mappa
 In una determinata applicazione, mobile, desktop, web o semplicemente un'API, i broker di solito risiedono alla "coda" di qualsiasi app perché sono l'ultimo punto di contatto tra il nostro codice personalizzato e il mondo esterno.
 
-Indipendentemente dal fatto che il mondo esterno in questo caso sia semplicemente un'archiviazione locale in memoria o un sistema indipendente che risiede dietro un'API, devono risiedere tutti dietro Broker in qualsiasi applicazione.
+Indipendentemente dal fatto che il mondo esterno in questo caso sia semplicemente un'archiviazione locale in memoria o un sistema indipendente che risiede dietro un'API, devono risiedere tutti dietro broker in qualsiasi applicazione.
 
 Nella seguente architettura di basso livello per una determinata API, i broker risiedono tra la nostra logica aziendale e la risorsa esterna:
 
@@ -31,7 +31,7 @@ I broker devono soddisfare un contratto locale. Devono implementare un'interfacc
 
 Ad esempio, dato che abbiamo un contratto locale "IStorageBroker" che richiede un'implementazione per una determinata operazione CRUD per un modello locale "Studente", l'operazione contrattuale sarebbe la seguente:
 
-```acuto
+```csharp
     interfaccia pubblica parziale IStorageBroker
     {
         IQueryable<Studente> SelectAllStudents();
@@ -40,7 +40,7 @@ Ad esempio, dato che abbiamo un contratto locale "IStorageBroker" che richiede u
 
 Un'implementazione per un broker di archiviazione sarebbe la seguente:
 
-```acuto
+```csharp
     classe parziale pubblica StorageBroker
     {
         public DbSet<Studente> Studenti { get; impostare; }
@@ -60,7 +60,7 @@ I broker non dovrebbero avere alcuna forma di controllo del flusso come if-state
 
 Ad esempio, un metodo broker che recupera un elenco di studenti da un database sarebbe simile a questo:
 
-```acuto
+```csharp
     public IQueryable<Student> SelectAllStudents()
     {
         using var broker = new StorageBroker(this.configuration);
